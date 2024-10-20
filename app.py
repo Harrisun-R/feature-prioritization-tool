@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 from io import BytesIO
-import xlsxwriter
 
 # Define prioritization methods
 def rice_score(reach: int, impact: int, confidence: int, effort: int) -> float:
@@ -17,12 +16,13 @@ def mosow_priority(priority: str) -> int:
     return {'Must Have': 1, 'Should Have': 2, 'Could Have': 3, 'Won’t Have': 4}.get(priority, 4)
 
 # Export DataFrame to Excel
-def to_excel(df):
+'''def to_excel(df):
     output = BytesIO()
     with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
         df.to_excel(writer, index=False, sheet_name='Prioritization Results')
     processed_data = output.getvalue()
     return processed_data
+'''
 
 # Export Dataframe to CSV
 def to_csv(df):
@@ -76,7 +76,8 @@ if not df.empty:
     st.dataframe(df)
 
     # Choose file format for download (CSV or Excel)
-    file_format = st.selectbox('Choose file format to download', ['CSV', 'Excel'])
+    file_format = st.selectbox('Choose file format to download', ['CSV'])
+    '''file_format = st.selectbox('Choose file format to download', ['CSV', 'Excel'])'''
     
     # Button to download the table in the selected format
     if file_format == 'CSV':

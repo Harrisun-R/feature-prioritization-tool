@@ -24,7 +24,7 @@ def weighted_scoring(weight, score):
     return weight * score
 
 # Export DataFrame to Excel
- def to_excel(df):
+def to_excel(df):
     output = BytesIO()
     with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
         df.to_excel(writer, index=False, sheet_name='Prioritization Results')

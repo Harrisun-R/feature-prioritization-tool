@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from io import BytesIO
+import xlsxwriter
 
 # Define prioritization methods
 def rice_score(reach: int, impact: int, confidence: int, effort: int) -> float:
@@ -95,4 +96,5 @@ if not df.empty:
 
 # Option to clear input data
 if st.button('Clear'):
-    st.experimental_rerun()
+    st.experimental_set_query_params()
+    st.stop()

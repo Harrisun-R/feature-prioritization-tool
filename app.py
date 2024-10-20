@@ -14,34 +14,46 @@ def mosow_priority(priority):
 # App title
 st.title('Feature Prioritization Tool for Product Managers')
 
-# Input feature details
-st.subheader('Enter Feature Details')
-feature_name = st.text_input('Feature Name')
+# Feature input section
+st.subheader('Enter Multiple Features')
 
-# Choose prioritization model
-model = st.selectbox('Select Prioritization Model', ['RICE', 'MoSCoW', 'Value vs Effort'])
+# Initialize an empty DataFrame to store feature details
+df = pd.DataFrame(columns=['Feature Name', 'Model', 'Priority'])
 
-if model == 'RICE':
-    reach = st.number_input('Reach (0-1000)', min_value=0, max_value=1000, value=100)
-    impact = st.slider('Impact (1-5)', 1, 5, 3)
-    confidence = st.slider('Confidence (1-100%)', 1, 100, 80)
-    effort = st.number_input('Effort (hours)', min_value=1, value=10)
-    if st.button('Calculate Priority'):
+# Number of features to input
+num_features = st.number_input('How many features do you want to add?', min_value=1, value=1)
+
+# Loop to input multiple features
+for i in range(num_features):
+    st.write(f'### Feature {i + 1}')
+    feature_name = st.text_input(f'Feature Name {i + 1}')
+    
+    # Choose prioritization model
+    model = st.selectbox(f'Select Prioritization Model for Feature {i + 1}', ['RICE', 'MoSCoW', 'Value vs Effort'], key=f"model_{i}")
+
+    if model == 'RICE':
+        reach = st.number_input(f'Reach (0-1000) for Feature {i + 1}', min_value=0, max_value=1000, value=100, key=f"reach_{i}")
+        impact = st.slider(f'Impact (1-5) for Feature {i + 1}', 1, 5, 3, key=f"impact_{i}")
+        confidence = st.slider(f'Confidence (1-100%) for Feature {i + 1}', 1, 100, 80, key=f"confidence_{i}")
+        effort = st.number_input(f'Effort (hours) for Feature {i + 1}', min_value=1, value=10, key=f"effort_{i}")
         score = rice_score(reach, impact, confidence, effort)
-        st.write(f'RICE Score for "{feature_name}": {score}')
-
-elif model == 'MoSCoW':
-    priority = st.selectbox('Select Priority', ['Must Have', 'Should Have', 'Could Have', 'Won’t Have'])
-    if st.button('Set Priority'):
+        df = df.append({'Feature Name': feature_name, 'Model': 'RICE', 'Priority': score}, ignore_index=True)
+    
+    elif model == 'MoSCoW':
+        priority = st.selectbox(f'Select Priority for Feature {i + 1}', ['Must Have', 'Should Have', 'Could Have', 'Won’t Have'], key=f"priority_{i}")
         mosow_score = mosow_priority(priority)
-        st.write(f'MoSCoW Priority for "{feature_name}": {priority} (Score: {mosow_score})')
-
-elif model == 'Value vs Effort':
-    value = st.number_input('Value', min_value=1, value=10)
-    effort = st.number_input('Effort', min_value=1, value=10)
-    if st.button('Calculate Priority'):
+        df = df.append({'Feature Name': feature_name, 'Model': 'MoSCoW', 'Priority': priority}, ignore_index=True)
+    
+    elif model == 'Value vs Effort':
+        value = st.number_input(f'Value for Feature {i + 1}', min_value=1, value=10, key=f"value_{i}")
+        effort = st.number_input(f'Effort for Feature {i + 1}', min_value=1, value=10, key=f"effort_val_{i}")
         ve_score = value_vs_effort(value, effort)
-        st.write(f'Value vs Effort Score for "{feature_name}": {ve_score}')
+        df = df.append({'Feature Name': feature_name, 'Model': 'Value vs Effort', 'Priority': ve_score}, ignore_index=True)
+
+# Display the prioritization table after inputting all features
+if not df.empty:
+    st.subheader('Prioritization Results')
+    st.dataframe(df)
 
 # Option to clear input data
 if st.button('Clear'):

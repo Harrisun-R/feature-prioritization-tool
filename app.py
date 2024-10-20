@@ -16,13 +16,13 @@ def mosow_priority(priority: str) -> int:
     return {'Must Have': 1, 'Should Have': 2, 'Could Have': 3, 'Won’t Have': 4}.get(priority, 4)
 
 # Export DataFrame to Excel
-'''def to_excel(df):
-    output = BytesIO()
-    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
-        df.to_excel(writer, index=False, sheet_name='Prioritization Results')
-    processed_data = output.getvalue()
-    return processed_data
-'''
+# def to_excel(df):
+#    output = BytesIO()
+#    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+#        df.to_excel(writer, index=False, sheet_name='Prioritization Results')
+#    processed_data = output.getvalue()
+#    return processed_data
+
 
 # Export Dataframe to CSV
 def to_csv(df):

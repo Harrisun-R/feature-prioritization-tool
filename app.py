@@ -24,12 +24,12 @@ def weighted_scoring(weight, score):
     return weight * score
 
 # Export DataFrame to Excel
-# def to_excel(df):
-#    output = BytesIO()
-#    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
-#        df.to_excel(writer, index=False, sheet_name='Prioritization Results')
-#    processed_data = output.getvalue()
-#    return processed_data
+ def to_excel(df):
+    output = BytesIO()
+    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+        df.to_excel(writer, index=False, sheet_name='Prioritization Results')
+    processed_data = output.getvalue()
+    return processed_data
 
 # Export Dataframe to CSV
 def to_csv(df):
@@ -37,9 +37,9 @@ def to_csv(df):
 
 # App title
 st.title('Feature Prioritization Tool for Product Managers')
-
+LINKEDIN_URL = "https://www.linkedin.com/in/harrisun-raj-mohan/"
 st.markdown("Created by Harrisun Raj Mohan")
-st.write(f"[Connect on LinkedIn]({https://www.linkedin.com/in/harrisun-raj-mohan/})")
+st.write(f"[Connect on LinkedIn]({LINKEDIN_URL})")
 
 # Explanations for prioritization models
 model_explanations = {

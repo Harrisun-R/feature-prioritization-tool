@@ -40,18 +40,18 @@ for i in range(num_features):
         confidence = st.slider(f'Confidence (1-100%) for Feature {i + 1}', 1, 100, 80, key=f"confidence_{i}")
         effort = st.number_input(f'Effort (hours) for Feature {i + 1}', min_value=1, value=10, key=f"effort_{i}")
         score = rice_score(reach, impact, confidence, effort)
-        df = df.append({'Feature Name': feature_name, 'Model': 'RICE', 'Priority': score}, ignore_index=True)
+        df = pd.concat([df, pd.DataFrame({'Feature Name': [feature_name], 'Model': ['RICE'], 'Priority': [score]})], ignore_index=True)
     
     elif model == 'MoSCoW':
         priority = st.selectbox(f'Select Priority for Feature {i + 1}', ['Must Have', 'Should Have', 'Could Have', 'Won’t Have'], key=f"priority_{i}")
         mosow_score = mosow_priority(priority)
-        df = df.append({'Feature Name': feature_name, 'Model': 'MoSCoW', 'Priority': priority}, ignore_index=True)
+        df = pd.concat([df, pd.DataFrame({'Feature Name': [feature_name], 'Model': ['MoSCoW'], 'Priority': [priority]})], ignore_index=True)
     
     elif model == 'Value vs Effort':
         value = st.number_input(f'Value for Feature {i + 1}', min_value=1, value=10, key=f"value_{i}")
         effort = st.number_input(f'Effort for Feature {i + 1}', min_value=1, value=10, key=f"effort_val_{i}")
         ve_score = value_vs_effort(value, effort)
-        df = df.append({'Feature Name': feature_name, 'Model': 'Value vs Effort', 'Priority': ve_score}, ignore_index=True)
+        df = pd.concat([df, pd.DataFrame({'Feature Name': [feature_name], 'Model': ['Value vs Effort'], 'Priority': [ve_score]})], ignore_index=True)
 
 # Display the prioritization table after inputting all features
 if not df.empty:

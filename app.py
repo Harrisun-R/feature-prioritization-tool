@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 from io import BytesIO
-import plotly.express as px
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -119,17 +118,27 @@ if not df.empty:
 
         if model == 'MoSCoW':
             df['Priority Level'] = df['Priority'].apply(lambda x: 1 if x == 'Must Have' else 2 if x == 'Should Have' else 3 if x == 'Could Have' else 4)
+            x = df['Feature Name']
+            y = df['Priority Level']
+            xlabel = 'Features'
+            ylabel = 'Priority Level'
         elif model == 'KANO Model':
-            df['Satisfaction'] = df['Priority']
-            df['Dissatisfaction'] = df['Priority'] * -1
+            x = df['Feature Name']
+            y = df['Priority']
+            xlabel = 'Features'
+            ylabel = 'Satisfaction vs Dissatisfaction'
         elif model == 'Value vs Effort':
-            df['Value'] = df['Priority']
-            df['Effort'] = df['Priority'] * 2  # Adjust according to the data
+            x = df['Feature Name']
+            y = df['Priority']
+            xlabel = 'Features'
+            ylabel = 'Value vs Effort'
 
+        # Plotting with matplotlib
         fig, ax = plt.subplots()
-        ax.scatter(df['Value'] if 'Value' in df else df['Satisfaction'], df['Effort'] if 'Effort' in df else df['Dissatisfaction'], color='b')
-        ax.set_xlabel('Value / Satisfaction')
-        ax.set_ylabel('Effort / Dissatisfaction')
+        ax.scatter(x, y, color='b')
+        ax.set_xlabel(xlabel)
+        ax.set_ylabel(ylabel)
+        plt.xticks(rotation=45)
         st.pyplot(fig)
         
     # Choose file format for download (CSV or Excel)

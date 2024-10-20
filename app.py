@@ -2,13 +2,16 @@ import streamlit as st
 import pandas as pd
 
 # Define prioritization methods
-def rice_score(reach, impact, confidence, effort):
-    return (reach * impact * confidence) / effort
+def rice_score(reach: int, impact: int, confidence: int, effort: int) -> float:
+    """Calculate RICE score."""
+    return (reach * impact * (confidence / 100)) / effort
 
-def value_vs_effort(value, effort):
+def value_vs_effort(value: int, effort: int) -> float:
+    """Calculate Value vs Effort score."""
     return value / effort
 
-def mosow_priority(priority):
+def mosow_priority(priority: str) -> int:
+    """Assign numeric priority based on MoSCoW method."""
     return {'Must Have': 1, 'Should Have': 2, 'Could Have': 3, 'Won’t Have': 4}.get(priority, 4)
 
 # App title
@@ -26,7 +29,7 @@ num_features = st.number_input('How many features do you want to add?', min_valu
 # Loop to input multiple features
 for i in range(num_features):
     st.write(f'### Feature {i + 1}')
-    feature_name = st.text_input(f'Feature Name {i + 1}')
+    feature_name = st.text_input(f'Feature Name {i + 1}', key=f"feature_{i}")
     
     # Choose prioritization model
     model = st.selectbox(f'Select Prioritization Model for Feature {i + 1}', ['RICE', 'MoSCoW', 'Value vs Effort'], key=f"model_{i}")

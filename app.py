@@ -142,7 +142,7 @@ if not df.empty:
         st.pyplot(fig)
         
     # Choose file format for download (CSV or Excel)
-    file_format = st.selectbox('Choose file format to download', ['CSV'])
+    file_format = st.selectbox('Choose file format to download', ['CSV','Excel'])
     
     # Button to download the table in the selected format
     if file_format == 'CSV':

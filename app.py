@@ -38,8 +38,8 @@ def to_csv(df):
 # App title
 st.title('Feature Prioritization Tool for Product Managers')
 
-
-st.markdown("Created by Harrisun Raj Mohan (https://www.linkedin.com/in/harrisun-raj-mohan/)")
+st.markdown("Created by Harrisun Raj Mohan")
+st.write(f"[Connect on LinkedIn]({https://www.linkedin.com/in/harrisun-raj-mohan/})")
 
 # Explanations for prioritization models
 model_explanations = {

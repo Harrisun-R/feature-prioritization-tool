@@ -57,7 +57,7 @@ num_features = st.number_input('How many features do you want to add?', min_valu
 feature_descriptions = []
 
 # Feature input and description gathering
-for i in range(num_features):
+for i in range(0,num_features):
     with st.expander(f'Feature {i + 1} Details', expanded=True):
         feature_name = st.text_input(f'Feature Name {i + 1}', key=f"feature_{i}")
         feature_description = st.text_area(f'Feature Description {i + 1}', key=f"description_{i}")

@@ -1,3 +1,6 @@
 matplotlib
 pandas
 xlsxwriter
+openpyxl
+transformers
+torch
